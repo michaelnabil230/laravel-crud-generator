@@ -39,7 +39,7 @@ class Fields
     public function getByName(string $name)
     {
         return collect($this->fields)->first(function ($field) use ($name) {
-            return property_exists($field, 'name') &&  $field->name === $name;
+            return property_exists($field, 'name') && $field->name === $name;
         });
     }
 
@@ -66,21 +66,22 @@ class Fields
                     $normalValidations = $field->validations ?? [];
                 }
 
-                if (property_exists($field, 'validations_in_' . $type)) {
-                    $relationshipValidations = $field->{'validations_in_' . $type} ?? [];
+                if (property_exists($field, 'validations_in_'.$type)) {
+                    $relationshipValidations = $field->{'validations_in_'.$type} ?? [];
                     $normalValidations = array_merge($normalValidations, $relationshipValidations);
                 }
 
                 return [$field->name => $normalValidations];
             })
             ->filter()
-            ->map(fn ($validations, $name) => "'$name' => " . json_encode($validations) . ",")
+            ->map(fn ($validations, $name) => "'$name' => ".json_encode($validations).',')
             ->implode("\n");
     }
 
     protected function convertArrayToString(array $data)
     {
         $commaSeparatedString = implode("', '", $data);
-        return "['" . $commaSeparatedString . "']";
+
+        return "['".$commaSeparatedString."']";
     }
 }

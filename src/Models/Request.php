@@ -29,12 +29,12 @@ class Request extends Generator
     protected function getStub(): string
     {
         return config('crud-generator.custom_template')
-            ? config('crud-generator.path') . '/request.stub'
-            : __DIR__ . '/../stubs/request.stub';
+            ? config('crud-generator.path').'/request.stub'
+            : __DIR__.'/../stubs/request.stub';
     }
 
     protected function getDefaultNamespace(string $rootNamespace): string
     {
-        return $rootNamespace . '\Http\Requests';
+        return $rootNamespace.'\Http\Requests';
     }
 }

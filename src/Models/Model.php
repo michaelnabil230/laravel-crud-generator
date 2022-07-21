@@ -38,8 +38,8 @@ class Model extends Generator
     protected function getStub(): string
     {
         return config('crud-generator.custom_template')
-            ? config('crud-generator.path') . '/model.stub'
-            : __DIR__ . '/../stubs/model.stub';
+            ? config('crud-generator.path').'/model.stub'
+            : __DIR__.'/../stubs/model.stub';
     }
 
     protected function buildSoftDelete(array $replace): array
@@ -54,6 +54,6 @@ class Model extends Generator
 
     protected function getDefaultNamespace(string $rootNamespace): string
     {
-        return is_dir(app_path('Models')) ? $rootNamespace . '\\Models' : $rootNamespace;
+        return is_dir(app_path('Models')) ? $rootNamespace.'\\Models' : $rootNamespace;
     }
 }

@@ -2,10 +2,10 @@
 
 namespace MichaelNabil230\LaravelCrudGenerator\Commands;
 
+use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Support\Facades\Storage;
 use MichaelNabil230\LaravelCrudGenerator\LaravelCrudGenerator;
 use Symfony\Component\Console\Input\InputOption;
-use Illuminate\Database\Console\Migrations\BaseCommand;
 
 class CrudCommand extends BaseCommand
 {

@@ -2,11 +2,11 @@
 
 namespace MichaelNabil230\LaravelCrudGenerator\Commands;
 
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Database\Console\Migrations\BaseCommand;
+use Illuminate\Support\Facades\Storage;
 use MichaelNabil230\LaravelCrudGenerator\LaravelCrudGenerator;
 use Symfony\Component\Console\Input\InputOption;
-use Illuminate\Database\Console\Migrations\BaseCommand;
 
 class RollBackCrudCommand extends BaseCommand
 {
@@ -18,7 +18,7 @@ class RollBackCrudCommand extends BaseCommand
 
     public function handle(): int
     {
-        if (!$this->confirmToProceed()) {
+        if (! $this->confirmToProceed()) {
             return 1;
         }
 

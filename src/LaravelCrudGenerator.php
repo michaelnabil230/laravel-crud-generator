@@ -2,16 +2,18 @@
 
 namespace MichaelNabil230\LaravelCrudGenerator;
 
-use MichaelNabil230\LaravelCrudGenerator\Models\Model;
-use MichaelNabil230\LaravelCrudGenerator\Models\Views;
-use MichaelNabil230\LaravelCrudGenerator\Models\Fields;
-use MichaelNabil230\LaravelCrudGenerator\Models\Request;
 use MichaelNabil230\LaravelCrudGenerator\Models\Controller;
+use MichaelNabil230\LaravelCrudGenerator\Models\Fields;
+use MichaelNabil230\LaravelCrudGenerator\Models\Model;
+use MichaelNabil230\LaravelCrudGenerator\Models\Request;
+use MichaelNabil230\LaravelCrudGenerator\Models\Views;
 
 class LaravelCrudGenerator
 {
     protected object $data;
+
     protected Fields $fields;
+
     protected string $modelClass;
 
     public function __construct(string $file)
@@ -96,14 +98,14 @@ class LaravelCrudGenerator
     {
         $modelClass = $this->modelClass;
 
-        $storeRequestClass = 'Store' . class_basename($modelClass) . 'Request';
+        $storeRequestClass = 'Store'.class_basename($modelClass).'Request';
 
         Request::make(
             name: $storeRequestClass,
             validations: $this->fields->getValidations('create'),
         )->handle();
 
-        $updateRequestClass = 'Update' . class_basename($modelClass) . 'Request';
+        $updateRequestClass = 'Update'.class_basename($modelClass).'Request';
 
         Request::make(
             name: $updateRequestClass,
