@@ -1,0 +1,14 @@
+/**
+ * Store a newly created resource in storage.
+ *
+ * @param  \{{ namespacedStoreRequest }}  $request
+ * @return \Illuminate\Http\RedirectResponse
+ */
+public function store({{ storeRequest }} $request): RedirectResponse
+{
+    $requestData = $request->validated();
+    {{fileSnippet}}
+    {{model}}::create($requestData);
+
+    return to_route('{{routeGroup}}{{modelVariablePlural}}.index')->with('flash_message', '{{model}} added!');
+}

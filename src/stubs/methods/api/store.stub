@@ -1,0 +1,14 @@
+/**
+ * Store a newly created resource in storage.
+ *
+ * @param  \{{ namespacedStoreRequest }}  $request
+ * @return \Illuminate\Http\Response
+ */
+public function store({{ storeRequest }} $request): Response
+{
+    $requestData = $request->validated();
+    {{fileSnippet}}
+    ${{modelVariable}} = {{model}}::create($requestData);
+
+    return response()->json(${{modelVariable}}, 201);
+}

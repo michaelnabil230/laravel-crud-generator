@@ -1,0 +1,24 @@
+<?php
+
+namespace DummyNamespace;
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+{{uses}}
+
+class {{ class }} extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware(['permission:read_{{modelVariablePlural}}'])->only(['index', 'show']);
+        $this->middleware(['permission:create_{{modelVariablePlural}}'])->only(['create', 'store']);
+        $this->middleware(['permission:update_{{modelVariablePlural}}'])->only(['edit', 'update']);
+        $this->middleware(['permission:delete_{{modelVariablePlural}}'])->only('destroy');
+    }
+
+    {{methods}}
+}

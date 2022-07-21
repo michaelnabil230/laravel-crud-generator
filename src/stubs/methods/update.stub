@@ -1,0 +1,15 @@
+/**
+ * Update the specified resource in storage.
+ *
+ * @param  \{{ namespacedUpdateRequest }}  $request
+ * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+ * @return \Illuminate\Http\RedirectResponse
+ */
+public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): RedirectResponse
+{
+    $requestData = $request->validated();
+    {{fileSnippet}}
+    ${{modelVariableSingular}}->update($requestData);
+
+    return to_route('{{routeGroup}}{{modelVariablePlural}}.index')->with('flash_message', '{{model}} updated!');
+}

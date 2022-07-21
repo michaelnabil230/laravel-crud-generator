@@ -1,0 +1,10 @@
+/**
+ * Show the form for editing the specified resource.
+ *
+ * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+ * @return \Illuminate\View\View
+ */
+public function edit({{ model }} ${{ modelVariable }}): View
+{
+    return view('{{viewPath}}{{modelVariablePlural}}.edit', compact('{{modelVariableSingular}}'));
+}

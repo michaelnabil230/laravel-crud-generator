@@ -1,0 +1,10 @@
+/**
+ * Display the specified resource.
+ *
+ * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+ * @return \Illuminate\Http\Response
+ */
+public function show({{ model }} ${{ modelVariable }})
+{
+   return ${{modelVariable}};
+}

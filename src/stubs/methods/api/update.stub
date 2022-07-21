@@ -1,0 +1,15 @@
+/**
+ * Update the specified resource in storage.
+ *
+ * @param  \{{ namespacedUpdateRequest }}  $request
+ * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+ * @return \Illuminate\Http\Response
+ */
+public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): Response
+{
+    $requestData = $request->validated();
+    {{fileSnippet}}
+    ${{modelVariable}}->update($requestData);
+
+    return response()->json(${{modelVariable}});
+}

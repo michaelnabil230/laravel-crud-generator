@@ -1,0 +1,10 @@
+/**
+ * Display the specified resource.
+ *
+ * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+ * @return \Illuminate\View\View
+ */
+public function show({{ model }} ${{ modelVariable }}): View 
+{
+    return view('{{viewPath}}{{modelVariablePlural}}.show', compact('{{modelVariableSingular}}'));
+}

@@ -1,0 +1,15 @@
+/**
+ * Display a listing of the resource.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return \Illuminate\View\View
+ */
+public function index(Request $request): View
+{
+    ${{modelVariablePlural}} = {{model}}::query()
+        ->search($request->search)
+        ->latest()
+        ->paginate();
+
+    return view('{{viewPath}}{{modelVariablePlural}}.index', compact('{{modelVariablePlural}}'));
+}
