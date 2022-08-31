@@ -1,6 +1,6 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Models;
+namespace MichaelNabil230\CrudGenerator\Models;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -50,8 +50,8 @@ class Views
         protected object $methods,
     ) {
         $this->stubViewDirectoryPath = config('crud-generator.custom_template')
-            ? config('crud-generator.path').'views/'
-            : __DIR__.'/../stubs/views/';
+            ? config('crud-generator.path') . 'views/'
+            : __DIR__ . '/../stubs/views/';
 
         $this->viewDirectoryPath = $this->makeDirectory();
     }
@@ -62,14 +62,14 @@ class Views
 
         $views = config('view.paths')[0] ?? resource_path('views');
 
-        return $views.DIRECTORY_SEPARATOR.$this->views->namespace.DIRECTORY_SEPARATOR.$resource.DIRECTORY_SEPARATOR;
+        return $views . DIRECTORY_SEPARATOR . $this->views->namespace . DIRECTORY_SEPARATOR . $resource . DIRECTORY_SEPARATOR;
     }
 
     protected function makeDirectory(): string
     {
         $directory = $this->viewPath();
 
-        if (! File::isDirectory($directory)) {
+        if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
 
@@ -190,17 +190,17 @@ class Views
 
     protected function getFilePath(string $name): string
     {
-        return $this->viewDirectoryPath.$name.'.blade.php';
+        return $this->viewDirectoryPath . $name . '.blade.php';
     }
 
     protected function wrapField(array $item, string $field): string
     {
-        $formGroup = File::get($this->stubViewDirectoryPath.'form-fields/wrap-field.blade.stub');
+        $formGroup = File::get($this->stubViewDirectoryPath . 'form-fields/wrap-field.blade.stub');
 
-        $labelText = "'".ucwords(strtolower(str_replace('_', ' ', $item['name'])))."'";
+        $labelText = "'" . ucwords(strtolower(str_replace('_', ' ', $item['name']))) . "'";
 
         if (true) {
-            $labelText = 'trans(\''.$this->crudName.'.'.$item['name'].'\')';
+            $labelText = 'trans(\'' . $this->crudName . '.' . $item['name'] . '\')';
         }
 
         return sprintf($formGroup, $item['name'], $labelText, $field);
@@ -233,11 +233,11 @@ class Views
 
         $required = $item['required'] ? 'required' : '';
 
-        $markup = File::get($this->stubViewDirectoryPath.'form-fields/form-field.blade.stub');
-        $markup = str_replace($start.'required'.$end, $required, $markup);
-        $markup = str_replace($start.'fieldType'.$end, $this->typeLookup[$item['type']], $markup);
-        $markup = str_replace($start.'itemName'.$end, $item['name'], $markup);
-        $markup = str_replace($start.'crudNameSingular'.$end, $this->crudNameSingular, $markup);
+        $markup = File::get($this->stubViewDirectoryPath . 'form-fields/form-field.blade.stub');
+        $markup = str_replace($start . 'required' . $end, $required, $markup);
+        $markup = str_replace($start . 'fieldType' . $end, $this->typeLookup[$item['type']], $markup);
+        $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
+        $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
 
         return $this->wrapField($item, $markup);
     }
@@ -249,10 +249,10 @@ class Views
 
         $required = $item['required'] ? 'required' : '';
 
-        $markup = File::get($this->stubViewDirectoryPath.'form-fields/password-field.blade.stub');
-        $markup = str_replace($start.'required'.$end, $required, $markup);
-        $markup = str_replace($start.'itemName'.$end, $item['name'], $markup);
-        $markup = str_replace($start.'crudNameSingular'.$end, $this->crudNameSingular, $markup);
+        $markup = File::get($this->stubViewDirectoryPath . 'form-fields/password-field.blade.stub');
+        $markup = str_replace($start . 'required' . $end, $required, $markup);
+        $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
+        $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
 
         return $this->wrapField($item, $markup);
     }
@@ -264,11 +264,11 @@ class Views
 
         $required = $item['required'] ? 'required' : '';
 
-        $markup = File::get($this->stubViewDirectoryPath.'form-fields/input-field.blade.stub');
-        $markup = str_replace($start.'required'.$end, $required, $markup);
-        $markup = str_replace($start.'fieldType'.$end, $this->typeLookup[$item['type']], $markup);
-        $markup = str_replace($start.'itemName'.$end, $item['name'], $markup);
-        $markup = str_replace($start.'crudNameSingular'.$end, $this->crudNameSingular, $markup);
+        $markup = File::get($this->stubViewDirectoryPath . 'form-fields/input-field.blade.stub');
+        $markup = str_replace($start . 'required' . $end, $required, $markup);
+        $markup = str_replace($start . 'fieldType' . $end, $this->typeLookup[$item['type']], $markup);
+        $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
+        $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
 
         return $this->wrapField($item, $markup);
     }
@@ -278,9 +278,9 @@ class Views
         $start = $this->delimiter[0];
         $end = $this->delimiter[1];
 
-        $markup = File::get($this->stubViewDirectoryPath.'form-fields/radio-field.blade.stub');
-        $markup = str_replace($start.'itemName'.$end, $item['name'], $markup);
-        $markup = str_replace($start.'crudNameSingular'.$end, $this->crudNameSingular, $markup);
+        $markup = File::get($this->stubViewDirectoryPath . 'form-fields/radio-field.blade.stub');
+        $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
+        $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
 
         return $this->wrapField($item, $markup);
     }
@@ -292,11 +292,11 @@ class Views
 
         $required = $item['required'] ? 'required' : '';
 
-        $markup = File::get($this->stubViewDirectoryPath.'form-fields/textarea-field.blade.stub');
-        $markup = str_replace($start.'required'.$end, $required, $markup);
-        $markup = str_replace($start.'fieldType'.$end, $this->typeLookup[$item['type']], $markup);
-        $markup = str_replace($start.'itemName'.$end, $item['name'], $markup);
-        $markup = str_replace($start.'crudNameSingular'.$end, $this->crudNameSingular, $markup);
+        $markup = File::get($this->stubViewDirectoryPath . 'form-fields/textarea-field.blade.stub');
+        $markup = str_replace($start . 'required' . $end, $required, $markup);
+        $markup = str_replace($start . 'fieldType' . $end, $this->typeLookup[$item['type']], $markup);
+        $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
+        $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
 
         return $this->wrapField($item, $markup);
     }
@@ -308,11 +308,11 @@ class Views
 
         $required = $item['required'] ? 'required' : '';
 
-        $markup = File::get($this->stubViewDirectoryPath.'form-fields/select-field.blade.stub');
-        $markup = str_replace($start.'required'.$end, $required, $markup);
-        $markup = str_replace($start.'options'.$end, $item['options'], $markup);
-        $markup = str_replace($start.'itemName'.$end, $item['name'], $markup);
-        $markup = str_replace($start.'crudNameSingular'.$end, $this->crudNameSingular, $markup);
+        $markup = File::get($this->stubViewDirectoryPath . 'form-fields/select-field.blade.stub');
+        $markup = str_replace($start . 'required' . $end, $required, $markup);
+        $markup = str_replace($start . 'options' . $end, $item['options'], $markup);
+        $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
+        $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
 
         return $this->wrapField($item, $markup);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Commands;
+namespace MichaelNabil230\CrudGenerator\Commands;
 
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Support\Facades\Storage;
-use MichaelNabil230\LaravelCrudGenerator\LaravelCrudGenerator;
+use MichaelNabil230\CrudGenerator\CrudGenerator;
 use Symfony\Component\Console\Input\InputOption;
 
 class CrudCommand extends BaseCommand
@@ -19,7 +19,7 @@ class CrudCommand extends BaseCommand
 
         $fileFromDisk = Storage::disk('crud')->get($file);
 
-        LaravelCrudGenerator::make($fileFromDisk)->run();
+        CrudGenerator::make($fileFromDisk)->run();
 
         $this->comment('All done');
 

@@ -1,14 +1,15 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator;
+namespace MichaelNabil230\CrudGenerator;
 
-use MichaelNabil230\LaravelCrudGenerator\Models\Controller;
-use MichaelNabil230\LaravelCrudGenerator\Models\Fields;
-use MichaelNabil230\LaravelCrudGenerator\Models\Model;
-use MichaelNabil230\LaravelCrudGenerator\Models\Request;
-use MichaelNabil230\LaravelCrudGenerator\Models\Views;
+use MichaelNabil230\CrudGenerator\Models\Model;
+use MichaelNabil230\CrudGenerator\Models\Views;
+use MichaelNabil230\CrudGenerator\Models\Fields;
+use MichaelNabil230\CrudGenerator\Models\Request;
+use MichaelNabil230\CrudGenerator\Models\Migration;
+use MichaelNabil230\CrudGenerator\Models\Controller;
 
-class LaravelCrudGenerator
+class CrudGenerator
 {
     protected object $data;
 
@@ -30,19 +31,14 @@ class LaravelCrudGenerator
     {
         return $this
             ->generateFields()
-            ->generateModel()
+            // ->generateModel()
             // ->generateViews()
-            // ->generateMigration()
+            ->generateMigration();
             // ->generateController()
-            ->generateFormRequests();
+            // ->generateFormRequests();
     }
 
-    public function data(): object
-    {
-        return $this->data;
-    }
-
-    public function generateFields(): self
+    protected function generateFields(): self
     {
         $fields = data_get($this->data, 'fields', []);
 
@@ -51,7 +47,7 @@ class LaravelCrudGenerator
         return $this;
     }
 
-    public function generateViews(): self
+    protected function generateViews(): self
     {
         Views::make(
             name: $this->data->views->resource ?? $this->data->name,
@@ -63,12 +59,17 @@ class LaravelCrudGenerator
         return $this;
     }
 
-    public function generateMigration(): self
+    protected function generateMigration(): self
     {
+        Migration::make(
+            name: $this->data->name,
+            fields: $this->fields,
+        )->handle();
+
         return $this;
     }
 
-    public function generateModel(): self
+    protected function generateModel(): self
     {
         $model = Model::make(
             name: $this->data->name,
@@ -83,7 +84,7 @@ class LaravelCrudGenerator
         return $this;
     }
 
-    public function generateController(): self
+    protected function generateController(): self
     {
         Controller::make(
             name: $this->data->name,
@@ -94,21 +95,23 @@ class LaravelCrudGenerator
         return $this;
     }
 
-    public function generateFormRequests(): array
+    protected function generateFormRequests(): array
     {
         $modelClass = $this->modelClass;
 
-        $storeRequestClass = 'Store'.class_basename($modelClass).'Request';
+        $storeRequestClass = 'Store' . class_basename($modelClass) . 'Request';
 
         Request::make(
             name: $storeRequestClass,
+            modelClass: $modelClass,
             validations: $this->fields->getValidations('create'),
         )->handle();
 
-        $updateRequestClass = 'Update'.class_basename($modelClass).'Request';
+        $updateRequestClass = 'Update' . class_basename($modelClass) . 'Request';
 
         Request::make(
             name: $updateRequestClass,
+            modelClass: $modelClass,
             validations: $this->fields->getValidations('update'),
         )->handle();
 

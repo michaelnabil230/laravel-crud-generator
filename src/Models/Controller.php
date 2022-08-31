@@ -1,8 +1,8 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Models;
+namespace MichaelNabil230\CrudGenerator\Models;
 
-use MichaelNabil230\LaravelCrudGenerator\Models\Accessories\Generator;
+use MichaelNabil230\CrudGenerator\Models\Accessories\Generator;
 
 class Controller extends Generator
 {
@@ -16,7 +16,7 @@ class Controller extends Generator
 
     protected function getStub(): string
     {
-        return __DIR__.'/../stubs/controller.stub';
+        return __DIR__ . '/../stubs/controller.stub';
     }
 
     public function showPageStatus(string $name, bool $statusDefault): bool
@@ -93,7 +93,7 @@ class Controller extends Generator
             foreach ($fieldsArray as $index => $item) {
                 $itemArray = explode('#', $item);
                 if (trim($itemArray[1]) == 'file') {
-                    $fileSnippet .= str_replace('{{fieldName}}', trim($itemArray[0]), $snippet)."\n";
+                    $fileSnippet .= str_replace('{{fieldName}}', trim($itemArray[0]), $snippet) . "\n";
                 }
             }
         }
@@ -107,10 +107,10 @@ class Controller extends Generator
     {
         $namespace = 'App\\Http\\Requests';
 
-        $namespacedRequests = $namespace.'\\'.$storeRequestClass.';';
+        $namespacedRequests = $namespace . '\\' . $storeRequestClass . ';';
 
         if ($storeRequestClass !== $updateRequestClass) {
-            $namespacedRequests .= PHP_EOL.'use '.$namespace.'\\'.$updateRequestClass.';';
+            $namespacedRequests .= PHP_EOL . 'use ' . $namespace . '\\' . $updateRequestClass . ';';
         }
 
         return array_merge($replace, [
@@ -118,10 +118,10 @@ class Controller extends Generator
             '{{storeRequest}}' => $storeRequestClass,
             '{{ updateRequest }}' => $updateRequestClass,
             '{{updateRequest}}' => $updateRequestClass,
-            '{{ namespacedStoreRequest }}' => $namespace.'\\'.$storeRequestClass,
-            '{{namespacedStoreRequest}}' => $namespace.'\\'.$storeRequestClass,
-            '{{ namespacedUpdateRequest }}' => $namespace.'\\'.$updateRequestClass,
-            '{{namespacedUpdateRequest}}' => $namespace.'\\'.$updateRequestClass,
+            '{{ namespacedStoreRequest }}' => $namespace . '\\' . $storeRequestClass,
+            '{{namespacedStoreRequest}}' => $namespace . '\\' . $storeRequestClass,
+            '{{ namespacedUpdateRequest }}' => $namespace . '\\' . $updateRequestClass,
+            '{{namespacedUpdateRequest}}' => $namespace . '\\' . $updateRequestClass,
             '{{ namespacedRequests }}' => $namespacedRequests,
             '{{namespacedRequests}}' => $namespacedRequests,
         ]);

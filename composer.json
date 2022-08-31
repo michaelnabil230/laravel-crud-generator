@@ -38,12 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "MichaelNabil230\\LaravelCrudGenerator\\": "src"
+            "MichaelNabil230\\CrudGenerator\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MichaelNabil230\\LaravelCrudGenerator\\Tests\\": "tests"
+            "MichaelNabil230\\CrudGenerator\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -62,7 +62,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MichaelNabil230\\LaravelCrudGenerator\\LaravelCrudGeneratorServiceProvider"
+                "MichaelNabil230\\CrudGenerator\\CrudGeneratorServiceProvider"
             ]
         }
     },

@@ -1,6 +1,6 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Models\Accessories;
+namespace MichaelNabil230\CrudGenerator\Models\Accessories;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
@@ -121,7 +121,7 @@ abstract class Generator
             throw new InvalidArgumentException('Reserved names are not allowed.');
         }
 
-        $name = $this->class();
+        $name = $this->classWithNamespace();
 
         $path = $this->getPath($name);
 
@@ -145,7 +145,7 @@ abstract class Generator
         }
 
         return $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
+            $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name
         );
     }
 
@@ -162,8 +162,8 @@ abstract class Generator
         }
 
         return is_dir(app_path('Models'))
-            ? $rootNamespace.'Models\\'.$model
-            : $rootNamespace.$model;
+            ? $rootNamespace . 'Models\\' . $model
+            : $rootNamespace . $model;
     }
 
     protected function getDefaultNamespace(string $rootNamespace): string
@@ -180,12 +180,12 @@ abstract class Generator
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return app_path().'/'.str_replace('\\', '/', $name).'.php';
+        return app_path() . '/' . str_replace('\\', '/', $name) . '.php';
     }
 
     protected function makeDirectory(string $path): string
     {
-        if (! $this->files->isDirectory(dirname($path))) {
+        if (!$this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
         }
 
@@ -204,15 +204,13 @@ abstract class Generator
 
     protected function replaceNamespace(string &$stub): self
     {
-        $name = $this->class();
+        $name = $this->classWithNamespace();
 
         $searches = [
             ['DummyNamespace', 'DummyRootNamespace'],
             ['{{ namespace }}', '{{ rootNamespace }}'],
             ['{{namespace}}', '{{rootNamespace}}'],
         ];
-
-        dd([$this->getNamespace($name), $this->rootNamespace()]);
 
         foreach ($searches as $search) {
             $stub = str_replace(
@@ -230,11 +228,16 @@ abstract class Generator
         return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
     }
 
+    public function classWithNamespace(): string
+    {
+        return $this->qualifyClass($this->class());
+    }
+
     public function class(): string
     {
         $name = $this->qualifyClass($this->name());
 
-        return str_replace($this->getNamespace($name).'\\', '', $name);
+        return str_replace($this->getNamespace($name) . '\\', '', $name);
     }
 
     protected function replaceClass(string $stub): string
@@ -271,7 +274,7 @@ abstract class Generator
     {
         $views = config('view.paths')[0] ?? resource_path('views');
 
-        return $views.($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return $views . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 
     protected function isReservedName(string $name): bool

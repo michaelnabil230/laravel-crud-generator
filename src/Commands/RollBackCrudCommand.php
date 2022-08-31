@@ -1,11 +1,11 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Commands;
+namespace MichaelNabil230\CrudGenerator\Commands;
 
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Support\Facades\Storage;
-use MichaelNabil230\LaravelCrudGenerator\LaravelCrudGenerator;
+use MichaelNabil230\CrudGenerator\CrudGenerator;
 use Symfony\Component\Console\Input\InputOption;
 
 class RollBackCrudCommand extends BaseCommand
@@ -18,7 +18,7 @@ class RollBackCrudCommand extends BaseCommand
 
     public function handle(): int
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return 1;
         }
 
@@ -27,11 +27,11 @@ class RollBackCrudCommand extends BaseCommand
         if ($this->hasOption('file')) {
             $file = $this->option('file');
             $fileFromDisk = $storage->get($file);
-            LaravelCrudGenerator::make($fileFromDisk)->run();
+            CrudGenerator::make($fileFromDisk)->run();
         } else {
             collect($storage->allFiles())->map(function ($file) use ($storage) {
                 $fileFromDisk = $storage->get($file);
-                LaravelCrudGenerator::make($fileFromDisk)->run();
+                CrudGenerator::make($fileFromDisk)->run();
             });
         }
 

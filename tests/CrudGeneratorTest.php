@@ -1,6 +1,6 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Tests;
+namespace MichaelNabil230\CrudGenerator\Tests;
 
 class CrudGeneratorTest extends TestCase
 {

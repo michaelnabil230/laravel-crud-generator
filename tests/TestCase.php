@@ -1,8 +1,8 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Tests;
+namespace MichaelNabil230\CrudGenerator\Tests;
 
-use MichaelNabil230\LaravelCrudGenerator\LaravelCrudGeneratorServiceProvider;
+use MichaelNabil230\CrudGenerator\CrudGeneratorServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -13,9 +13,9 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        exec('rm -rf '.__DIR__.'/temp/*');
-        exec('rm -rf '.app_path('/*'));
-        exec('rm -rf '.database_path('migrations/*'));
+        exec('rm -rf ' . __DIR__ . '/temp/*');
+        exec('rm -rf ' . app_path('/*'));
+        exec('rm -rf ' . database_path('migrations/*'));
     }
 
     protected function tearDown(): void
@@ -28,13 +28,13 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelCrudGeneratorServiceProvider::class,
+            CrudGeneratorServiceProvider::class,
         ];
     }
 
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('view.paths', [__DIR__.'/temp/views']);
+        $app['config']->set('view.paths', [__DIR__ . '/temp/views']);
 
         $app['config']->set('crud-generator', [
             'custom_template' => false,

@@ -15,7 +15,7 @@ composer require michaelnabil230/laravel-crud-generator --dev
 ## Usage
 
 ```php
-$crud = new MichaelNabil230\LaravelCrudGenerator();
+$crud = new MichaelNabil230\CrudGenerator();
 echo $crud->echoPhrase('Hello, MichaelNabil230!');
 ```
 

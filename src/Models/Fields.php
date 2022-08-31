@@ -1,8 +1,9 @@
 <?php
 
-namespace MichaelNabil230\LaravelCrudGenerator\Models;
+namespace MichaelNabil230\CrudGenerator\Models;
 
 use stdClass;
+use Illuminate\Support\Str;
 
 class Fields
 {
@@ -31,16 +32,14 @@ class Fields
 
     public function getRelationships(): array
     {
-        return collect($this->fields)->filter(function ($field) {
-            return property_exists($field, 'relationships');
-        })->toArray();
+        return collect($this->fields)
+            ->filter(fn ($field) => property_exists($field, 'relationships'))
+            ->toArray();
     }
 
     public function getByName(string $name)
     {
-        return collect($this->fields)->first(function ($field) use ($name) {
-            return property_exists($field, 'name') && $field->name === $name;
-        });
+        return collect($this->fields)->first(fn ($field) => property_exists($field, 'name') && $field->name === $name);
     }
 
     public function getByShow(string $name, bool $value): array
@@ -57,7 +56,7 @@ class Fields
         return $this->convertArrayToString($fillable);
     }
 
-    public function getValidations(string $type)
+    public function getValidations(string $type): string
     {
         return collect($this->fields)
             ->mapWithKeys(function ($field) use ($type) {
@@ -66,22 +65,27 @@ class Fields
                     $normalValidations = $field->validations ?? [];
                 }
 
-                if (property_exists($field, 'validations_in_'.$type)) {
-                    $relationshipValidations = $field->{'validations_in_'.$type} ?? [];
+                if (property_exists($field, 'validations_in_' . $type)) {
+                    $relationshipValidations = $field->{'validations_in_' . $type} ?? [];
                     $normalValidations = array_merge($normalValidations, $relationshipValidations);
                 }
 
                 return [$field->name => $normalValidations];
             })
             ->filter()
-            ->map(fn ($validations, $name) => "'$name' => ".json_encode($validations).',')
+            ->map(fn ($validations, $name) => "\t\t\t'$name' => " . json_encode($validations) . ',')
             ->implode("\n");
+    }
+
+    public function fields(): object
+    {
+        return $this->fields;
     }
 
     protected function convertArrayToString(array $data)
     {
         $commaSeparatedString = implode("', '", $data);
 
-        return "['".$commaSeparatedString."']";
+        return "['" . $commaSeparatedString . "']";
     }
 }
