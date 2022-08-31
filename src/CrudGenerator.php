@@ -2,12 +2,12 @@
 
 namespace MichaelNabil230\CrudGenerator;
 
-use MichaelNabil230\CrudGenerator\Models\Model;
-use MichaelNabil230\CrudGenerator\Models\Views;
-use MichaelNabil230\CrudGenerator\Models\Fields;
-use MichaelNabil230\CrudGenerator\Models\Request;
-use MichaelNabil230\CrudGenerator\Models\Migration;
 use MichaelNabil230\CrudGenerator\Models\Controller;
+use MichaelNabil230\CrudGenerator\Models\Fields;
+use MichaelNabil230\CrudGenerator\Models\Migration;
+use MichaelNabil230\CrudGenerator\Models\Model;
+use MichaelNabil230\CrudGenerator\Models\Request;
+use MichaelNabil230\CrudGenerator\Models\Views;
 
 class CrudGenerator
 {
@@ -34,8 +34,8 @@ class CrudGenerator
             // ->generateModel()
             // ->generateViews()
             ->generateMigration();
-            // ->generateController()
-            // ->generateFormRequests();
+        // ->generateController()
+        // ->generateFormRequests();
     }
 
     protected function generateFields(): self
@@ -99,7 +99,7 @@ class CrudGenerator
     {
         $modelClass = $this->modelClass;
 
-        $storeRequestClass = 'Store' . class_basename($modelClass) . 'Request';
+        $storeRequestClass = 'Store'.class_basename($modelClass).'Request';
 
         Request::make(
             name: $storeRequestClass,
@@ -107,7 +107,7 @@ class CrudGenerator
             validations: $this->fields->getValidations('create'),
         )->handle();
 
-        $updateRequestClass = 'Update' . class_basename($modelClass) . 'Request';
+        $updateRequestClass = 'Update'.class_basename($modelClass).'Request';
 
         Request::make(
             name: $updateRequestClass,

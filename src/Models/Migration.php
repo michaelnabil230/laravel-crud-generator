@@ -77,7 +77,7 @@ class Migration extends Generator
             $typeTable = 'string';
             $options = '';
 
-            if (!in_array($type, array_keys($typeLookup))) {
+            if (! in_array($type, array_keys($typeLookup))) {
                 continue;
             }
 
@@ -97,11 +97,11 @@ class Migration extends Generator
 
     private function select(object $field): array
     {
-        if (!property_exists($field, 'options')) {
+        if (! property_exists($field, 'options')) {
             throw new \Exception('Options are not supported for select or enum fields.');
         }
 
-        $enumOptionsStr = implode("','", (array)$field->options);
+        $enumOptionsStr = implode("','", (array) $field->options);
         $options = ", ['$enumOptionsStr']";
 
         return [
@@ -111,7 +111,7 @@ class Migration extends Generator
 
     private function relationship(object $field): array
     {
-        if (!property_exists($field, 'relationship')) {
+        if (! property_exists($field, 'relationship')) {
             throw new \Exception('Relationship is not supported for foreignId fields.');
         }
 
@@ -136,21 +136,21 @@ class Migration extends Generator
             $typeTable,
             $fieldName,
             $options,
-            $accessories
+            $accessories,
         ];
     }
 
     private function buildColumn(&$schema, $typeTable, $fieldName = '', $options = '', $accessories = ''): void
     {
-        if (!empty($fieldName)) {
+        if (! empty($fieldName)) {
             $fieldName = "'$fieldName'";
         }
 
-        $column = $fieldName . $options;
+        $column = $fieldName.$options;
 
         $tabIndent = '    ';
         $schema .= $this->buildBluePrint($typeTable, $column, $accessories);
-        $schema .= "\n" . $tabIndent . $tabIndent . $tabIndent;
+        $schema .= "\n".$tabIndent.$tabIndent.$tabIndent;
     }
 
     private function buildBluePrint(string $typeTable, string $column, string $accessories): string
@@ -161,8 +161,8 @@ class Migration extends Generator
     protected function getStub(): string
     {
         return config('crud-generator.custom_template')
-            ? config('crud-generator.path') . '/migration.stub'
-            : __DIR__ . '/../stubs/migration.stub';
+            ? config('crud-generator.path').'/migration.stub'
+            : __DIR__.'/../stubs/migration.stub';
     }
 
     protected function getPath(string $name): string
@@ -170,7 +170,7 @@ class Migration extends Generator
         $tableName = $this->tableName();
         $datePrefix = date('Y_m_d_His');
 
-        return database_path('/migrations/' . $datePrefix . '_create_' . $tableName . '_table.php');
+        return database_path('/migrations/'.$datePrefix.'_create_'.$tableName.'_table.php');
     }
 
     public function tableName()

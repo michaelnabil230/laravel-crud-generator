@@ -145,7 +145,7 @@ abstract class Generator
         }
 
         return $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name
+            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
         );
     }
 
@@ -162,8 +162,8 @@ abstract class Generator
         }
 
         return is_dir(app_path('Models'))
-            ? $rootNamespace . 'Models\\' . $model
-            : $rootNamespace . $model;
+            ? $rootNamespace.'Models\\'.$model
+            : $rootNamespace.$model;
     }
 
     protected function getDefaultNamespace(string $rootNamespace): string
@@ -180,12 +180,12 @@ abstract class Generator
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return app_path() . '/' . str_replace('\\', '/', $name) . '.php';
+        return app_path().'/'.str_replace('\\', '/', $name).'.php';
     }
 
     protected function makeDirectory(string $path): string
     {
-        if (!$this->files->isDirectory(dirname($path))) {
+        if (! $this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
         }
 
@@ -237,7 +237,7 @@ abstract class Generator
     {
         $name = $this->qualifyClass($this->name());
 
-        return str_replace($this->getNamespace($name) . '\\', '', $name);
+        return str_replace($this->getNamespace($name).'\\', '', $name);
     }
 
     protected function replaceClass(string $stub): string
@@ -274,7 +274,7 @@ abstract class Generator
     {
         $views = config('view.paths')[0] ?? resource_path('views');
 
-        return $views . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        return $views.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 
     protected function isReservedName(string $name): bool

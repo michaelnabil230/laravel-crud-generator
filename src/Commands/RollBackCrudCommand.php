@@ -18,7 +18,7 @@ class RollBackCrudCommand extends BaseCommand
 
     public function handle(): int
     {
-        if (!$this->confirmToProceed()) {
+        if (! $this->confirmToProceed()) {
             return 1;
         }
 

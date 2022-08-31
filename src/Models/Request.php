@@ -41,7 +41,7 @@ class Request extends Generator
     {
         $nameBindingRoute = Str::camel($this->modelClass);
 
-        $resourceId = '$this->' . $nameBindingRoute;
+        $resourceId = '$this->'.$nameBindingRoute;
 
         return array_merge($replace, [
             '{{resourceId}}' => $resourceId,
@@ -52,12 +52,12 @@ class Request extends Generator
     protected function getStub(): string
     {
         return config('crud-generator.custom_template')
-            ? config('crud-generator.path') . '/request.stub'
-            : __DIR__ . '/../stubs/request.stub';
+            ? config('crud-generator.path').'/request.stub'
+            : __DIR__.'/../stubs/request.stub';
     }
 
     protected function getDefaultNamespace(string $rootNamespace): string
     {
-        return $rootNamespace . '\Http\Requests';
+        return $rootNamespace.'\Http\Requests';
     }
 }

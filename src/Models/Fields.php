@@ -3,7 +3,6 @@
 namespace MichaelNabil230\CrudGenerator\Models;
 
 use stdClass;
-use Illuminate\Support\Str;
 
 class Fields
 {
@@ -65,15 +64,15 @@ class Fields
                     $normalValidations = $field->validations ?? [];
                 }
 
-                if (property_exists($field, 'validations_in_' . $type)) {
-                    $relationshipValidations = $field->{'validations_in_' . $type} ?? [];
+                if (property_exists($field, 'validations_in_'.$type)) {
+                    $relationshipValidations = $field->{'validations_in_'.$type} ?? [];
                     $normalValidations = array_merge($normalValidations, $relationshipValidations);
                 }
 
                 return [$field->name => $normalValidations];
             })
             ->filter()
-            ->map(fn ($validations, $name) => "\t\t\t'$name' => " . json_encode($validations) . ',')
+            ->map(fn ($validations, $name) => "\t\t\t'$name' => ".json_encode($validations).',')
             ->implode("\n");
     }
 
@@ -86,6 +85,6 @@ class Fields
     {
         $commaSeparatedString = implode("', '", $data);
 
-        return "['" . $commaSeparatedString . "']";
+        return "['".$commaSeparatedString."']";
     }
 }
